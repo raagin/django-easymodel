@@ -1,0 +1,7 @@
+*.egg-info
+*.pyc
+*.swp
+.installed.cfg
+*.DS_Store
+*.egg
+db.sqlite3
