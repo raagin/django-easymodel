@@ -30,10 +30,7 @@ class I18n(object):
         
     def __call__(self, cls):
         """Executes the decorator on the cls."""
-        model_dir = os.path.dirname(sys.modules[cls.__module__].__file__) + getattr(settings, 'LOCALE_POSTFIX', '')
         cls = meta.localize_fields(cls, self.localized_fields)
-        if getattr(settings, 'AUTO_CATALOG', False):
-            i18n.register(cls, getattr(settings, 'LOCALE_DIR', None) or model_dir )
         
         # add permission for editing the untranslated fields in this model
         perm = (("can_edit_untranslated_fields_of_%s" % cls.__name__.lower(),

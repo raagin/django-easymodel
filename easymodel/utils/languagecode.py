@@ -40,9 +40,9 @@ def get_short_language_codes():
 # define regular expressions. they are different, depending on whether we are using full language
 # codes, eg 'en-us' or we want to show the abbreviated versions in the url, eg. 'en'
 if USE_SHORT_LANGUAGE_CODES:
-    STRIP_LANGUAGE_CODE_REGEX = re.compile(ur'/(?:%s)/' % "|".join(get_short_language_codes()))
+    STRIP_LANGUAGE_CODE_REGEX = re.compile(r'/(?:%s)/' % "|".join(get_short_language_codes()))
 else:
-    STRIP_LANGUAGE_CODE_REGEX = re.compile(ur'/(?:%s)/' % "|".join(get_language_codes()))
+    STRIP_LANGUAGE_CODE_REGEX = re.compile(r'/(?:%s)/' % "|".join(get_language_codes()))
 
 def get_all_language_codes():
     """

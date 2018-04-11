@@ -1,5 +1,6 @@
-from types import NoneType
 from django.utils.text import capfirst
+
+NoneType = type(None)
 
 __all__ = ('standin_for',)
 
@@ -78,7 +79,7 @@ def standin_for(obj, **attrs):
         return obj
     
     attr_names  = attrs.keys()
-    attr_names.sort()
+    attr_names = sorted(attr_names)
 
     # Contruct __reduce__ method, so the resulting class can be pickled
     attrs_org = attrs.copy() # Create a copy to be used for the recude method

@@ -43,6 +43,8 @@ def get_localized_property(context, field=None, language=None):
             settings.LANGUAGE_CODE, 
         ]
     
+    # print(context.__dict__)
+    # print(getattr(context, 'title_ru', None))
     def predicate(x):
         value = getattr(context, get_real_fieldname(field, x), None)
         return value if valid_for_gettext(value) else None

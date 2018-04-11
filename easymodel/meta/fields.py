@@ -3,7 +3,7 @@ Fields used by easymode's i18n.meta package which modifies a class to enable i18
 """
 from django.conf import settings
 from django.utils import translation
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 from django.utils.translation.trans_real import translation as translation_catalogs
 
 from easymodel.meta.value import GettextVO
@@ -51,7 +51,7 @@ class DefaultFieldDescriptor(property):
         # check the translation in the current language
         # but avoid empty string and None 
         if valid_for_gettext(vo.msgid):
-            vo.msg = self.to_python(translation.ugettext(force_unicode(vo.msgid)))
+            vo.msg = self.to_python(translation.ugettext(force_text(vo.msgid)))
         elif valid_for_gettext(vo.stored_value):
             # we can not use the msgid for gettext but we did find a valid
             # translation in the database. Fine we stop here and return that
@@ -84,7 +84,7 @@ class DefaultFieldDescriptor(property):
                     # of the fallback languages.
                     for fallback in get_fallback_languages():
                         catalog = translation_catalogs(fallback)
-                        msg = catalog.ugettext(force_unicode(vo.msgid))
+                        msg = catalog.ugettext(force_text(vo.msgid))
                         if self.to_python(msg) != vo.msgid:
                             vo.fallback = self.to_python(msg)
                             break
@@ -127,6 +127,6 @@ class DefaultFieldDescriptor(property):
     def value_to_string(self, obj):
         """This descriptor acts as a Field, as far as the serializer is concerned."""
         try:
-            return force_unicode(self.__get__(obj))
+            return force_text(self.__get__(obj))
         except TypeError:
             return str(self.__get__(obj))
