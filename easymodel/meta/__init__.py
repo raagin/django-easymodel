@@ -11,7 +11,7 @@ import copy
 from django.conf import settings
 from django.contrib.admin.options import FORMFIELD_FOR_DBFIELD_DEFAULTS
 from django.db.models.fields import NOT_PROVIDED
-from django.utils import translation
+from django.utils.text import format_lazy
 
 from easymodel.utils.languagecode import get_all_language_codes, get_real_fieldname
 from easymodel.meta.fields import DefaultFieldDescriptor
@@ -69,8 +69,11 @@ def localize_fields(cls, localized_fields):
                     i18n_attr.blank = True
 
             if i18n_attr.verbose_name:
-                i18n_attr.verbose_name = translation.string_concat(
-                    i18n_attr.verbose_name, u' (%s)' % language_code)
+                i18n_attr.verbose_name = format_lazy(
+                    '{0}{1}',
+                    i18n_attr.verbose_name, 
+                    u' (%s)' % language_code
+                )
             cls.add_to_class(lang_attr_name, i18n_attr)
 
         # delete original field
