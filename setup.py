@@ -22,10 +22,6 @@ setup(name='django-easymodel',
     maintainer_email='y.raagin@gmail.com',
     keywords='i18n internationalization translate django',
     long_description=description,
-    install_requires=[
-        'setuptools',
-        'django>=1.11',
-    ],
     url='http://github.com/raagin/django-easymodel',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     # for avoiding conflict have one namespace for all apc related eggs.
