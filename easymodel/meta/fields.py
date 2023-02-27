@@ -3,7 +3,6 @@ Fields used by easymode's i18n.meta package which modifies a class to enable i18
 """
 from django.conf import settings
 from django.utils import translation
-from django.utils.encoding import force_text
 from django.utils.translation.trans_real import translation as translation_catalogs
 
 from easymodel.meta.value import GettextVO
@@ -11,6 +10,12 @@ from easymodel.meta.utils import get_localized_property, valid_for_gettext, \
     get_fallback_languages, get_localized_field_name
 from easymodel.utils.languagecode import get_real_fieldname
 from easymodel.utils.standin import standin_for
+
+try:
+    from django.utils.encoding import force_text
+except ImportError:
+    from django.utils.encoding import force_str
+    force_text = force_str
 
 class DefaultFieldDescriptor(property):
     """
