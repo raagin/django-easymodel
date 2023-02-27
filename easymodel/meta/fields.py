@@ -33,7 +33,7 @@ class DefaultFieldDescriptor(property):
         """
         Read the localised version of the field this descriptor emulates.
         First try to see if the localised field is really set.
-        If not, then use ugettext_lazy to find a tranlation in the current language
+        If not, then use gettext_lazy to find a tranlation in the current language
         for this field.
         """
         # self must be returned in a getattr context.
@@ -56,7 +56,7 @@ class DefaultFieldDescriptor(property):
         # check the translation in the current language
         # but avoid empty string and None 
         if valid_for_gettext(vo.msgid):
-            vo.msg = self.to_python(translation.ugettext(force_text(vo.msgid)))
+            vo.msg = self.to_python(translation.gettext(force_text(vo.msgid)))
         elif valid_for_gettext(vo.stored_value):
             # we can not use the msgid for gettext but we did find a valid
             # translation in the database. Fine we stop here and return that
@@ -89,7 +89,7 @@ class DefaultFieldDescriptor(property):
                     # of the fallback languages.
                     for fallback in get_fallback_languages():
                         catalog = translation_catalogs(fallback)
-                        msg = catalog.ugettext(force_text(vo.msgid))
+                        msg = catalog.gettext(force_text(vo.msgid))
                         if self.to_python(msg) != vo.msgid:
                             vo.fallback = self.to_python(msg)
                             break
