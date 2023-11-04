@@ -40,7 +40,7 @@ class DefaultFieldDescriptor(property):
         if obj is None:
             return self
 
-        current_language = translation.get_language()
+        current_language = translation.get_language() or settings.LANGUAGE_CODE
         real_field_name = get_real_fieldname(self.name, current_language)
 
         vo = GettextVO()
