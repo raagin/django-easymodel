@@ -16,13 +16,15 @@ def valid_for_gettext(value):
     
 def get_fallback_languages():
     """Retrieve the fallback languages from the settings.py"""
-    lang = translation.get_language()
+    lang = get_language()
     fallback_list = settings.FALLBACK_LANGUAGES.get(lang, None)
     if fallback_list:
         return fallback_list
 
     return settings.FALLBACK_LANGUAGES.get(lang[:2], [])
 
+def get_language():
+    return translation.get_language() or settings.LANGUAGE_CODE
 
 def get_localized_property(context, field=None, language=None):
     '''
@@ -34,12 +36,12 @@ def get_localized_property(context, field=None, language=None):
         return getattr(context, get_real_fieldname(field, language))
     
     if hasattr(settings, 'FALLBACK_LANGUAGES'):
-        attrs = [translation.get_language()]
+        attrs = [get_language()]
         attrs += get_fallback_languages()
     else:
         attrs = [
-            translation.get_language(),
-            translation.get_language()[:2],
+            get_language(),
+            get_language()[:2],
             settings.LANGUAGE_CODE, 
         ]
     
@@ -55,8 +57,8 @@ def get_localized_property(context, field=None, language=None):
 def get_localized_field_name(context, field):
     """Get the name of the localized field"""
     attrs = [
-             translation.get_language(), 
-             translation.get_language()[:2], 
+             get_language(), 
+             get_language()[:2], 
              settings.LANGUAGE_CODE
             ]
             
